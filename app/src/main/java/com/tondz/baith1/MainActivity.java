@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CALL_PHONE},123);
+        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.RECEIVE_SMS},3432);
         edt_phonenumber= findViewById(R.id.edt_phonenumber);
         edt_content = findViewById(R.id.edt_content);
         edt_email = findViewById(R.id.edt_email);
