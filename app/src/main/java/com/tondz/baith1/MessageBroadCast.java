@@ -10,38 +10,21 @@ import android.util.Log;
 import android.widget.Toast;
 
 public class MessageBroadCast extends BroadcastReceiver {
-    private Bundle bundle;
-    private SmsMessage currentSMS;
-    private String message;
+    private static final String SMS_RECEVIED = "android.provider.Telephony.SMS_RECEIVED";
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (intent.getAction().equals("android.provider.Telephony.SMS_RECEIVED")) {
-            bundle = intent.getExtras();
-            if (bundle != null) {
-                Object[] pdu_Objects = (Object[]) bundle.get("pdus");
-                if (pdu_Objects != null) {
-
-                    for (Object aObject : pdu_Objects) {
-                        currentSMS = getIncomingMessage(aObject, bundle);
-                        String senderNo = currentSMS.getDisplayOriginatingAddress();
-                        message = currentSMS.getDisplayMessageBody();
-                        Toast.makeText(context, "Người gửi: " + senderNo + " :\n Tin nhắn: " + message, Toast.LENGTH_LONG).show();
-                    }
-                    this.abortBroadcast();
+        if (intent.getAction()==SMS_RECEVIED){
+            Bundle bundle= intent.getExtras();
+            if(bundle !=null){
+                Object[] pdus=(Object[])bundle.get("pdus");
+                SmsMessage[]smsMessages= new SmsMessage[pdus.length];
+                for (int i=0;i<pdus.length;i++){
+                    smsMessages[i]=SmsMessage.createFromPdu((byte[])pdus[i]);
                 }
+                Toast.makeText(context,smsMessages[0].getMessageBody(),Toast.LENGTH_LONG).show();
+                Log.e("TinNhan",smsMessages[0].getMessageBody());
             }
         }
-    }
-
-    private SmsMessage getIncomingMessage(Object aObject, Bundle bundle) {
-        SmsMessage currentSMS;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            String format = bundle.getString("format");
-            currentSMS = SmsMessage.createFromPdu((byte[]) aObject, format);
-        } else {
-            currentSMS = SmsMessage.createFromPdu((byte[]) aObject);
-        }
-        return currentSMS;
     }
 }
