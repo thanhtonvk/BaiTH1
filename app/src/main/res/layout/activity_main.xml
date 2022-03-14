@@ -13,6 +13,12 @@
         android:layout_height="40dp"
         android:id="@+id/edt_phonenumber"/>
     <EditText
+        android:hint="Nhap email"
+
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/edt_email"/>
+    <EditText
         android:id="@+id/edt_content"
         android:hint="Noi dung"
         android:layout_width="match_parent"
@@ -21,7 +27,12 @@
         android:id="@+id/btn_send"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Send"/>
+        android:text="SendSMS"/>
+    <Button
+        android:id="@+id/btn_sendemail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SendEmail"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

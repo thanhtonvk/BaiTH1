@@ -13,7 +13,7 @@ import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
 
-    EditText edt_phonenumber,edt_content;
+    EditText edt_phonenumber,edt_content,edt_email;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CALL_PHONE},123);
         edt_phonenumber= findViewById(R.id.edt_phonenumber);
         edt_content = findViewById(R.id.edt_content);
+        edt_email = findViewById(R.id.edt_email);
         findViewById(R.id.btn_send).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -28,6 +29,20 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(Intent.ACTION_SENDTO,uriSms);
                 intent.putExtra("sms_body",edt_content.getText().toString());
                 startActivity(intent);
+            }
+        });
+        findViewById(R.id.btn_sendemail).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String to = edt_email.getText().toString();
+                String subject= "E cu";
+                String body=edt_content.getText().toString();
+                String mailTo = "mailto:" + to +
+                        "?&subject=" + Uri.encode(subject) +
+                        "&body=" + Uri.encode(body);
+                Intent emailIntent = new Intent(Intent.ACTION_VIEW);
+                emailIntent.setData(Uri.parse(mailTo));
+                startActivity(emailIntent);
             }
         });
         findViewById(R.id.btn_call).setOnClickListener(new View.OnClickListener() {
